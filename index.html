@@ -167,11 +167,11 @@ canvas{position:fixed;top:0;left:0;z-index:-2;}
 <footer>© 2026 Abhay Upadhyay • IIT Mandi</footer>
 
 <script>
-/* Cursor Glow */
+// Cursor
 const cursor=document.querySelector('.cursor');
 window.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
 
-/* 3D Tilt Cards */
+// 3D Tilt Cards
 document.querySelectorAll('.card').forEach(card=>{
   card.addEventListener('mousemove',e=>{
     const rect=card.getBoundingClientRect();
@@ -183,10 +183,10 @@ document.querySelectorAll('.card').forEach(card=>{
   card.addEventListener('mouseleave',()=>{card.style.setProperty('--tiltX','0deg');card.style.setProperty('--tiltY','0deg');});
 });
 
-/* Three.js 6G Particle Background */
+// THREE.JS 6G Wave Background
 let scene=new THREE.Scene();
-let camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,2000);
-camera.position.z=600;
+let camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,3000);
+camera.position.z=700;
 
 let renderer=new THREE.WebGLRenderer({alpha:true});
 renderer.setSize(window.innerWidth,window.innerHeight);
@@ -199,35 +199,57 @@ document.body.appendChild(renderer.domElement);
 
 window.addEventListener('resize',()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
 
-let particlesCount=800;
-let particlesGeometry=new THREE.BufferGeometry();
-let positions=new Float32Array(particlesCount*3);
-let colors=new Float32Array(particlesCount*3);
-
-for(let i=0;i<particlesCount;i++){
-  positions[i*3]=(Math.random()-0.5)*2000;
-  positions[i*3+1]=(Math.random()-0.5)*2000;
-  positions[i*3+2]=(Math.random()-0.5)*2000;
-  colors[i*3]=Math.random();
-  colors[i*3+1]=Math.random();
-  colors[i*3+2]=Math.random();
+// Particles
+let particleCount=1000;
+let geometry=new THREE.BufferGeometry();
+let positions=new Float32Array(particleCount*3);
+let colors=new Float32Array(particleCount*3);
+for(let i=0;i<particleCount;i++){
+  positions[i*3]=(Math.random()-0.5)*2500;
+  positions[i*3+1]=(Math.random()-0.5)*2500;
+  positions[i*3+2]=(Math.random()-0.5)*2500;
+  colors[i*3]=Math.random();colors[i*3+1]=Math.random();colors[i*3+2]=Math.random();
 }
-particlesGeometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
-particlesGeometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
+geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
+geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
 
-let particlesMaterial=new THREE.PointsMaterial({size:3,vertexColors:true,blending:THREE.AdditiveBlending,transparent:true});
-let particleSystem=new THREE.Points(particlesGeometry,particlesMaterial);
-scene.add(particleSystem);
+let material=new THREE.PointsMaterial({size:3,vertexColors:true,blending:THREE.AdditiveBlending,transparent:true});
+let particles=new THREE.Points(geometry,material);
+scene.add(particles);
 
+// 6G Wave Lines
+let waveLines=[];
+for(let i=0;i<60;i++){
+  let mat=new THREE.LineBasicMaterial({color:new THREE.Color(`hsl(${Math.random()*360},100%,50%)`),transparent:true,opacity:0.6});
+  let geom=new THREE.BufferGeometry();
+  let pts=[];
+  for(let j=0;j<50;j++){
+    pts.push(new THREE.Vector3(Math.sin(j/5)*50, j*10-250, Math.cos(j/5)*50));
+  }
+  geom.setFromPoints(pts);
+  let line=new THREE.Line(geom,mat);
+  line.position.set((Math.random()-0.5)*1000,(Math.random()-0.5)*800,(Math.random()-0.5)*1000);
+  scene.add(line);
+  waveLines.push({line,angle:Math.random()*Math.PI*2,speed:0.002+Math.random()*0.004});
+}
+
+// Mouse effect
 let mouseX=0,mouseY=0;
 document.addEventListener('mousemove',e=>{mouseX=e.clientX-window.innerWidth/2; mouseY=e.clientY-window.innerHeight/2;});
 
 function animate(){
   requestAnimationFrame(animate);
-  particleSystem.rotation.y+=0.002;
-  particleSystem.rotation.x+=0.001;
-  particleSystem.position.x += (mouseX*0.01 - particleSystem.position.x)*0.05;
-  particleSystem.position.y += (-mouseY*0.01 - particleSystem.position.y)*0.05;
+  particles.rotation.y+=0.0015;
+  particles.rotation.x+=0.001;
+  particles.position.x += (mouseX*0.01 - particles.position.x)*0.05;
+  particles.position.y += (-mouseY*0.01 - particles.position.y)*0.05;
+
+  waveLines.forEach(obj=>{
+    obj.angle+=obj.speed;
+    obj.line.rotation.y=obj.angle;
+    obj.line.position.x=Math.sin(obj.angle*2)*500;
+  });
+
   renderer.render(scene,camera);
 }
 animate();
