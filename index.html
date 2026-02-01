@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhay Upadhyay | Research Portfolio</title>
+
+<style>
+/* ===================== ROOT ===================== */
+:root{
+  --bg:#05080f;
+  --card:#0c1220;
+  --accent:#00f0ff;
+  --accent2:#7c7cff;
+  --text:#eaeaff;
+  --muted:#9aa0c7;
+  --glass:rgba(255,255,255,0.06);
+}
+
+/* ===================== RESET ===================== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===================== BODY ===================== */
+body{
+  background:radial-gradient(circle at top, #0b1330, var(--bg));
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* ===================== PARTICLE BG ===================== */
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+}
+
+/* ===================== HEADER ===================== */
+header{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px;
+}
+
+.hero{
+  max-width:900px;
+}
+
+.hero h1{
+  font-size:3.2rem;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:glow 3s infinite alternate;
+}
+
+@keyframes glow{
+  from{ text-shadow:0 0 10px var(--accent);}
+  to{ text-shadow:0 0 30px var(--accent2);}
+}
+
+.hero p{
+  margin-top:15px;
+  font-size:1.1rem;
+  color:var(--muted);
+}
+
+/* ===================== NAV ===================== */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  background:rgba(5,8,15,0.7);
+  backdrop-filter:blur(10px);
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  padding:15px;
+  z-index:10;
+}
+
+nav a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:0.95rem;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:var(--accent);
+}
+
+/* ===================== SECTIONS ===================== */
+section{
+  padding:90px 12%;
+}
+
+.section-title{
+  font-size:2rem;
+  margin-bottom:40px;
+  position:relative;
+}
+
+.section-title::after{
+  content:"";
+  position:absolute;
+  bottom:-10px;
+  left:0;
+  width:80px;
+  height:3px;
+  background:linear-gradient(90deg,var(--accent),transparent);
+}
+
+/* ===================== CARDS ===================== */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:16px;
+  padding:25px;
+  transition:0.4s;
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent,rgba(0,240,255,0.2),transparent);
+  transform:translateX(-100%);
+  transition:0.6s;
+}
+
+.card:hover::before{
+  transform:translateX(100%);
+}
+
+.card:hover{
+  transform:translateY(-10px) scale(1.02);
+  box-shadow:0 20px 60px rgba(0,240,255,0.2);
+}
+
+.card h3{
+  color:var(--accent);
+  margin-bottom:10px;
+}
+
+.card p{
+  color:var(--muted);
+  font-size:0.95rem;
+}
+
+/* ===================== TIMELINE ===================== */
+.timeline{
+  position:relative;
+  margin-top:40px;
+}
+
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:10px;
+  top:0;
+  bottom:0;
+  width:3px;
+  background:linear-gradient(var(--accent),transparent);
+}
+
+.time-item{
+  margin-left:40px;
+  margin-bottom:40px;
+  opacity:0;
+  transform:translateY(30px);
+  transition:0.6s;
+}
+
+.time-item.active{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.time-item h4{
+  color:var(--accent);
+}
+
+/* ===================== FOOTER ===================== */
+footer{
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
+  font-size:0.85rem;
+}
+
+footer a{
+  color:var(--accent);
+  text-decoration:none;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media(max-width:600px){
+  .hero h1{font-size:2.4rem;}
+  section{padding:70px 8%;}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<nav>
+  <a href="#about">About</a>
+  <a href="#education">Education</a>
+  <a href="#research">Research</a>
+  <a href="#lab">Lab</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<header>
+  <div class="hero">
+    <h1>Abhay Upadhyay</h1>
+    <p>MTech + PhD (Dual Degree) • IIT Mandi • SCEE</p>
+    <p>Infocomm Lab A18</p>
+  </div>
+</header>
+
+<section id="about">
+  <h2 class="section-title">About</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Current Role</h3>
+      <p>MTech + PhD Dual Degree Scholar at IIT Mandi (2026–Present), Department of SCEE.</p>
+    </div>
+    <div class="card">
+      <h3>Background</h3>
+      <p>B.Tech from Punjab University (2021–2025).</p>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <h2 class="section-title">Education Timeline</h2>
+  <div class="timeline">
+    <div class="time-item">
+      <h4>2021 – 2025</h4>
+      <p>B.Tech, Punjab University</p>
+    </div>
+    <div class="time-item">
+      <h4>2026 – Present</h4>
+      <p>MTech + PhD (Dual Degree), IIT Mandi<br>SCEE Department</p>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <h2 class="section-title">Research Interest</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>6G & Communication</h3>
+      <p>Advanced wireless communication systems with focus on next-generation 6G technologies.</p>
+    </div>
+  </div>
+</section>
+
+<section id="lab">
+  <h2 class="section-title">Laboratory</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Infocomm Lab A18</h3>
+      <p>IIT Mandi</p>
+      <p>Under supervision of <strong>Pawan Kumar Reddy</strong></p>
+      <p>
+        <a href="https://faculty.iitmandi.ac.in/~pavan/" target="_blank">Faculty Webpage ↗</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="section-title">Contact</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>LinkedIn</h3>
+      <p>
+        <a href="https://www.linkedin.com/in/abhay-upadhyay-22a1a7236/" target="_blank">
+          linkedin.com/in/abhay-upadhyay-22a1a7236
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Abhay Upadhyay • IIT Mandi
+</footer>
+
+<script>
+/* ===== Scroll Reveal ===== */
+const items=document.querySelectorAll('.time-item');
+window.addEventListener('scroll',()=>{
+  items.forEach(i=>{
+    const top=i.getBoundingClientRect().top;
+    if(top<window.innerHeight-100){
+      i.classList.add('active');
+    }
+  });
+});
+
+/* ===== Particle Background ===== */
+const c=document.getElementById("bg");
+const ctx=c.getContext("2d");
+let w,h;
+function resize(){
+  w=c.width=window.innerWidth;
+  h=c.height=window.innerHeight;
+}
+window.onresize=resize; resize();
+
+let particles=Array.from({length:120},()=>({
+  x:Math.random()*w,
+  y:Math.random()*h,
+  r:Math.random()*2+0.5,
+  dx:(Math.random()-0.5)*0.5,
+  dy:(Math.random()-0.5)*0.5
+}));
+
+function animate(){
+  ctx.clearRect(0,0,w,h);
+  particles.forEach(p=>{
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>w) p.dx*=-1;
+    if(p.y<0||p.y>h) p.dy*=-1;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,240,255,0.6)";
+    ctx.fill();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+  </html>
