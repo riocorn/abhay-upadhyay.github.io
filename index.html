@@ -136,7 +136,20 @@ nav a{
 nav a:hover{
   color:var(--accent);
 }
+nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-4px;
+  width:0;
+  height:2px;
+  background:var(--accent);
+  transition:0.3s;
+}
 
+nav a:hover::after{
+  width:100%;
+}
 /* ===================== SECTIONS ===================== */
 section{
   padding:90px 12%;
@@ -158,6 +171,9 @@ section{
   background:linear-gradient(90deg,var(--accent),transparent);
 }
 
+  header{
+  padding-top:120px;
+  }
 /* ===================== CARDS ===================== */
 .cards{
   display:grid;
