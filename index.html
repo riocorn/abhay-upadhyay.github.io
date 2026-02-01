@@ -118,30 +118,32 @@ nav{
   top:0;
   left:0;
   width:100%;
-  background:rgba(255,255,255,0.95); /* STRONG background */
-  backdrop-filter:blur(12px);
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(14px);
   display:flex;
   justify-content:center;
-  gap:28px;
-  padding:14px 10px;
+  align-items:center;
+  flex-wrap:wrap;              /* ⭐ KEY FIX */
+  gap:16px;                    /* smaller gap */
+  padding:10px 12px;           /* reduced height */
   z-index:9999;
-  box-shadow:0 8px 25px rgba(0,0,0,0.12);
+  box-shadow:0 6px 20px rgba(0,0,0,0.12);
 }
   
 nav a{
-  color:#0f172a;          /* DARK TEXT – very important */
+  color:#0f172a;
   text-decoration:none;
-  font-size:0.95rem;
+  font-size:0.9rem;
   font-weight:700;
-  padding:6px 12px;
+  padding:6px 10px;
   border-radius:8px;
-  transition:0.3s ease;
+  white-space:nowrap;          /* prevents break */
+  transition:0.25s ease;
 }
 
 nav a:hover{
   background:linear-gradient(120deg,#2563eb,#22c55e);
   color:white;
-  box-shadow:0 4px 12px rgba(37,99,235,0.35);
 }
 nav a::after{
   content:"";
@@ -158,8 +160,8 @@ nav a:hover::after{
   width:100%;
 }
   header{
-  padding-top:130px;
-  }
+  padding-top:140px;   /* enough space for wrapped nav */
+}
 /* ===================== SECTIONS ===================== */
 section{
   padding:90px 12%;
