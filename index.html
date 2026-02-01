@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abhay Upadhyay | IIT Mandi</title>
 
-<!-- Font Awesome for icons -->
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<!-- Three.js CDN -->
+<!-- Three.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
 
 <style>
@@ -167,11 +166,11 @@ canvas{position:fixed;top:0;left:0;z-index:-2;}
 <footer>© 2026 Abhay Upadhyay • IIT Mandi</footer>
 
 <script>
-// Cursor
+// Cursor Glow
 const cursor=document.querySelector('.cursor');
 window.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
 
-// 3D Tilt Cards
+// Card Tilt
 document.querySelectorAll('.card').forEach(card=>{
   card.addEventListener('mousemove',e=>{
     const rect=card.getBoundingClientRect();
@@ -183,7 +182,7 @@ document.querySelectorAll('.card').forEach(card=>{
   card.addEventListener('mouseleave',()=>{card.style.setProperty('--tiltX','0deg');card.style.setProperty('--tiltY','0deg');});
 });
 
-// THREE.JS 6G Wave Background
+// Three.js 6G Pulse Waves
 let scene=new THREE.Scene();
 let camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,3000);
 camera.position.z=700;
@@ -199,56 +198,56 @@ document.body.appendChild(renderer.domElement);
 
 window.addEventListener('resize',()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
 
-// Particles
-let particleCount=1000;
+// Particle system
+let particleCount=1500;
 let geometry=new THREE.BufferGeometry();
 let positions=new Float32Array(particleCount*3);
-let colors=new Float32Array(particleCount*3);
 for(let i=0;i<particleCount;i++){
-  positions[i*3]=(Math.random()-0.5)*2500;
-  positions[i*3+1]=(Math.random()-0.5)*2500;
-  positions[i*3+2]=(Math.random()-0.5)*2500;
-  colors[i*3]=Math.random();colors[i*3+1]=Math.random();colors[i*3+2]=Math.random();
+  let r=Math.random()*500 + 50;
+  let theta=Math.random()*Math.PI*2;
+  let phi=Math.random()*Math.PI;
+  positions[i*3]=r*Math.sin(phi)*Math.cos(theta);
+  positions[i*3+1]=r*Math.sin(phi)*Math.sin(theta);
+  positions[i*3+2]=r*Math.cos(phi);
 }
 geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
-geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
-
-let material=new THREE.PointsMaterial({size:3,vertexColors:true,blending:THREE.AdditiveBlending,transparent:true});
+let material=new THREE.PointsMaterial({size:2,color:0x00f0ff,transparent:true,opacity:0.7,blending:THREE.AdditiveBlending});
 let particles=new THREE.Points(geometry,material);
 scene.add(particles);
 
-// 6G Wave Lines
-let waveLines=[];
-for(let i=0;i<60;i++){
-  let mat=new THREE.LineBasicMaterial({color:new THREE.Color(`hsl(${Math.random()*360},100%,50%)`),transparent:true,opacity:0.6});
-  let geom=new THREE.BufferGeometry();
-  let pts=[];
-  for(let j=0;j<50;j++){
-    pts.push(new THREE.Vector3(Math.sin(j/5)*50, j*10-250, Math.cos(j/5)*50));
-  }
-  geom.setFromPoints(pts);
-  let line=new THREE.Line(geom,mat);
-  line.position.set((Math.random()-0.5)*1000,(Math.random()-0.5)*800,(Math.random()-0.5)*1000);
-  scene.add(line);
-  waveLines.push({line,angle:Math.random()*Math.PI*2,speed:0.002+Math.random()*0.004});
+// Pulsing concentric wave rings
+let waveRings=[];
+for(let i=0;i<50;i++){
+  let radius=i*15+50;
+  let ringGeom=new THREE.RingGeometry(radius,radius+0.5,64);
+  let ringMat=new THREE.MeshBasicMaterial({color:0x00f0ff,transparent:true,opacity:0.15,side:THREE.DoubleSide});
+  let ring=new THREE.Mesh(ringGeom,ringMat);
+  ring.rotation.x=Math.PI/2;
+  scene.add(ring);
+  waveRings.push(ring);
 }
 
-// Mouse effect
+// Mouse control
 let mouseX=0,mouseY=0;
 document.addEventListener('mousemove',e=>{mouseX=e.clientX-window.innerWidth/2; mouseY=e.clientY-window.innerHeight/2;});
 
+// Animation
+let pulse=0;
 function animate(){
   requestAnimationFrame(animate);
   particles.rotation.y+=0.0015;
   particles.rotation.x+=0.001;
+
+  // Pulse wave animation
+  pulse+=0.05;
+  waveRings.forEach((ring,i)=>{
+    ring.material.opacity=0.15+0.15*Math.sin(pulse-i*0.3);
+    ring.scale.setScalar(1+0.005*Math.sin(pulse*2-i*0.2));
+  });
+
+  // Mouse reactive
   particles.position.x += (mouseX*0.01 - particles.position.x)*0.05;
   particles.position.y += (-mouseY*0.01 - particles.position.y)*0.05;
-
-  waveLines.forEach(obj=>{
-    obj.angle+=obj.speed;
-    obj.line.rotation.y=obj.angle;
-    obj.line.position.x=Math.sin(obj.angle*2)*500;
-  });
 
   renderer.render(scene,camera);
 }
