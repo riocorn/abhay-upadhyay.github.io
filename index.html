@@ -18,237 +18,74 @@
   --muted:#94a3b8;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Inter,Segoe UI,sans-serif;
-  scroll-behavior:smooth;
-}
-
-body{
-  background:radial-gradient(circle at top,#0b1025,#05070f 70%);
-  color:var(--text);
-  overflow-x:hidden;
-}
+/* ===== RESET ===== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Segoe UI,sans-serif;scroll-behavior:smooth;}
+body{background:#05070f;color:var(--text);overflow-x:hidden;}
 
 /* ===== CURSOR GLOW ===== */
-.cursor{
-  position:fixed;
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:var(--accent);
-  pointer-events:none;
-  mix-blend-mode:screen;
-  filter:blur(8px);
-  z-index:9999;
-}
+.cursor{position:fixed;width:18px;height:18px;border-radius:50%;background:var(--accent);pointer-events:none;mix-blend-mode:screen;filter:blur(8px);z-index:9999;}
 
 /* ===== NAV ===== */
-nav{
-  position:fixed;
-  top:0;
-  width:100%;
-  backdrop-filter:blur(16px);
-  background:rgba(5,7,15,0.7);
-  display:flex;
-  justify-content:center;
-  gap:26px;
-  padding:16px;
-  z-index:1000;
-}
-
-nav a{
-  color:var(--muted);
-  text-decoration:none;
-  font-weight:600;
-  position:relative;
-}
-
-nav a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-6px;
-  width:0;
-  height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  transition:.3s;
-}
-
-nav a:hover{
-  color:white;
-}
-
-nav a:hover::after{
-  width:100%;
-}
+nav{position:fixed;top:0;width:100%;backdrop-filter:blur(16px);background:rgba(5,7,15,0.7);display:flex;justify-content:center;gap:26px;padding:16px;z-index:1000;}
+nav a{color:var(--muted);text-decoration:none;font-weight:600;position:relative;}
+nav a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.3s;}
+nav a:hover{color:white;} nav a:hover::after{width:100%;}
 
 /* ===== HERO ===== */
-header{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:140px 20px;
-}
+header{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:140px 20px;position:relative;}
+header h1{font-size:3.6rem;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 40px rgba(0,240,255,.4);}
+header p{margin-top:14px;color:var(--muted);font-size:1.05rem;}
+.actions{margin-top:40px;display:flex;justify-content:center;gap:20px;}
+.btn{padding:14px 34px;border-radius:40px;border:none;cursor:pointer;font-weight:700;text-decoration:none;transition:.4s;}
+.btn.primary{background:linear-gradient(120deg,var(--accent),var(--accent2));color:black;}
+.btn.secondary{border:2px solid var(--accent);color:var(--accent);background:transparent;}
+.btn:hover{transform:translateY(-4px);box-shadow:0 0 30px rgba(0,240,255,.6);}
 
-.hero h1{
-  font-size:3.6rem;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
+/* ===== BEST SCHOLAR ANIMATION ===== */
+#scholar-banner{
+  position:absolute;
+  top:30px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:1.8rem;
+  font-weight:800;
+  background:linear-gradient(120deg,#00f0ff,#8b5cf6,#00f0ff);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 40px rgba(0,240,255,.4);
+  text-shadow:0 0 20px rgba(0,240,255,0.5),0 0 40px rgba(139,92,246,0.5);
+  animation:bannerGlow 2s ease-in-out infinite alternate;
 }
-
-.hero p{
-  margin-top:14px;
-  color:var(--muted);
-  font-size:1.05rem;
-}
-
-/* ===== BUTTONS ===== */
-.actions{
-  margin-top:40px;
-  display:flex;
-  justify-content:center;
-  gap:20px;
-}
-
-.btn{
-  padding:14px 34px;
-  border-radius:40px;
-  border:none;
-  cursor:pointer;
-  font-weight:700;
-  text-decoration:none;
-  transition:.4s;
-}
-
-.btn.primary{
-  background:linear-gradient(120deg,var(--accent),var(--accent2));
-  color:black;
-}
-
-.btn.secondary{
-  border:2px solid var(--accent);
-  color:var(--accent);
-  background:transparent;
-}
-
-.btn:hover{
-  transform:translateY(-4px);
-  box-shadow:0 0 30px rgba(0,240,255,.6);
-}
+@keyframes bannerGlow{0%{text-shadow:0 0 20px rgba(0,240,255,0.5);}50%{text-shadow:0 0 40px rgba(0,240,255,0.7);}100%{text-shadow:0 0 20px rgba(139,92,246,0.5);}}
 
 /* ===== SECTIONS ===== */
-section{
-  padding:100px 12%;
-}
+section{padding:100px 12%;}
+.title{font-size:2.2rem;margin-bottom:50px;position:relative;}
+.title::after{content:"";position:absolute;bottom:-12px;left:0;width:90px;height:3px;background:linear-gradient(90deg,var(--accent),transparent);}
 
-.title{
-  font-size:2.2rem;
-  margin-bottom:50px;
-  position:relative;
-}
-
-.title::after{
-  content:"";
-  position:absolute;
-  bottom:-12px;
-  left:0;
-  width:90px;
-  height:3px;
-  background:linear-gradient(90deg,var(--accent),transparent);
-}
-
-/* ===== CARDS ===== */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:30px;
-}
-
-.card{
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:20px;
-  padding:30px;
-  backdrop-filter:blur(20px);
-  transition:.5s;
-  position:relative;
-  overflow:hidden;
-}
-
-.card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(120deg,transparent,rgba(0,240,255,.15),transparent);
-  transform:translateX(-120%);
-  transition:.7s;
-}
-
-.card:hover::before{
-  transform:translateX(120%);
-}
-
-.card:hover{
-  transform:translateY(-10px) scale(1.03);
-  box-shadow:0 30px 80px rgba(0,240,255,.25);
-}
-
-.card i{
-  font-size:2.2rem;
-  color:var(--accent);
-  margin-bottom:18px;
-}
-
-.card h3{
-  margin-bottom:10px;
-}
+/* ===== CARDS 3D TILT ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;}
+.card{background:var(--glass);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:30px;backdrop-filter:blur(20px);transition:.4s;position:relative;overflow:hidden;transform-style:preserve-3d; perspective:1000px;}
+.card:hover{transform:rotateY(var(--tiltX,0deg)) rotateX(var(--tiltY,0deg)) translateY(-10px) scale(1.03);box-shadow:0 30px 80px rgba(0,240,255,.25);}
+.card i{font-size:2.2rem;color:var(--accent);margin-bottom:18px;}
+.card h3{margin-bottom:10px;}
 
 /* ===== GALLERY ===== */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
-}
-
-.gallery img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-  border-radius:20px;
-  transition:.6s;
-  filter:saturate(1.3);
-}
-
-.gallery img:hover{
-  transform:scale(1.08);
-  box-shadow:0 30px 70px rgba(139,92,246,.5);
-}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px;}
+.gallery img{width:100%;height:220px;object-fit:cover;border-radius:20px;transition:.6s;filter:saturate(1.3);}
+.gallery img:hover{transform:scale(1.08);box-shadow:0 30px 70px rgba(139,92,246,.5);}
 
 /* ===== FOOTER ===== */
-footer{
-  text-align:center;
-  padding:40px;
-  color:var(--muted);
-}
+footer{text-align:center;padding:40px;color:var(--muted);}
 
 /* ===== RESPONSIVE ===== */
-@media(max-width:700px){
-  header h1{font-size:2.6rem}
-  section{padding:80px 8%}
-}
+@media(max-width:700px){header h1{font-size:2.6rem} section{padding:80px 8%}}
 </style>
 </head>
 
 <body>
 
 <div class="cursor"></div>
+<div id="scholar-banner">🏆 Best Scholar at IIT Mandi 🏆</div>
 
 <nav>
   <a href="#about">About</a>
@@ -264,7 +101,6 @@ footer{
     <h1>Abhay Upadhyay</h1>
     <p>MTech + PhD (Dual Degree) • IIT Mandi • SCEE</p>
     <p>Infocomm Lab A18</p>
-
     <div class="actions">
       <a href="#research" class="btn primary">Research</a>
       <a href="#contact" class="btn secondary">Contact</a>
@@ -275,54 +111,30 @@ footer{
 <section id="about">
   <h2 class="title">About Me</h2>
   <div class="grid">
-    <div class="card">
-      <i class="fa-solid fa-user-graduate"></i>
-      <h3>Current Role</h3>
-      <p>MTech + PhD Dual Degree Scholar at IIT Mandi (SCEE).</p>
-    </div>
-    <div class="card">
-      <i class="fa-solid fa-building-columns"></i>
-      <h3>Background</h3>
-      <p>B.Tech from Punjab University (2021–2025).</p>
-    </div>
+    <div class="card"><i class="fa-solid fa-user-graduate"></i><h3>Current Role</h3><p>MTech + PhD Dual Degree Scholar at IIT Mandi (SCEE).</p></div>
+    <div class="card"><i class="fa-solid fa-building-columns"></i><h3>Background</h3><p>B.Tech from Punjab University (2021–2025).</p></div>
   </div>
 </section>
 
 <section id="education">
   <h2 class="title">Education</h2>
   <div class="grid">
-    <div class="card">
-      <i class="fa-solid fa-calendar"></i>
-      <h3>2021 – 2025</h3>
-      <p>B.Tech, Punjab University</p>
-    </div>
-    <div class="card">
-      <i class="fa-solid fa-microchip"></i>
-      <h3>2026 – Present</h3>
-      <p>MTech + PhD, IIT Mandi<br>SCEE</p>
-    </div>
+    <div class="card"><i class="fa-solid fa-calendar"></i><h3>2021 – 2025</h3><p>B.Tech, Punjab University</p></div>
+    <div class="card"><i class="fa-solid fa-microchip"></i><h3>2026 – Present</h3><p>MTech + PhD, IIT Mandi<br>SCEE</p></div>
   </div>
 </section>
 
 <section id="research">
   <h2 class="title">Research Interest</h2>
   <div class="grid">
-    <div class="card">
-      <i class="fa-solid fa-satellite-dish"></i>
-      <h3>6G & Communication</h3>
-      <p>Next-generation wireless systems, ultra-reliable communication, and future 6G networks.</p>
-    </div>
+    <div class="card"><i class="fa-solid fa-satellite-dish"></i><h3>6G & Communication</h3><p>Next-generation wireless systems, ultra-reliable communication, and future 6G networks.</p></div>
   </div>
 </section>
 
 <section id="lab">
   <h2 class="title">Laboratory</h2>
   <div class="grid">
-    <div class="card">
-      <i class="fa-solid fa-flask"></i>
-      <h3>Infocomm Lab A18</h3>
-      <p>IIT Mandi<br>Supervisor: <b>Pawan Kumar Reddy</b></p>
-    </div>
+    <div class="card"><i class="fa-solid fa-flask"></i><h3>Infocomm Lab A18</h3><p>IIT Mandi<br>Supervisor: <b>Pawan Kumar Reddy</b></p></div>
   </div>
 </section>
 
@@ -338,28 +150,53 @@ footer{
 <section id="contact">
   <h2 class="title">Contact</h2>
   <div class="grid">
-    <div class="card">
-      <i class="fa-solid fa-envelope"></i>
-      <p>DD25016@students.iitmandi.ac.in</p>
-    </div>
-    <div class="card">
-      <i class="fa-brands fa-linkedin"></i>
-      <p>linkedin.com/in/abhay-upadhyay-22a1a7236</p>
-    </div>
+    <div class="card"><i class="fa-solid fa-envelope"></i><p>DD25016@students.iitmandi.ac.in</p></div>
+    <div class="card"><i class="fa-brands fa-linkedin"></i><p>linkedin.com/in/abhay-upadhyay-22a1a7236</p></div>
   </div>
 </section>
 
-<footer>
-  © 2026 Abhay Upadhyay • IIT Mandi
-</footer>
+<footer>© 2026 Abhay Upadhyay • IIT Mandi</footer>
 
 <script>
-/* CURSOR GLOW */
+/* ===== CURSOR GLOW ===== */
 const cursor=document.querySelector('.cursor');
 window.addEventListener('mousemove',e=>{
   cursor.style.left=e.clientX+'px';
   cursor.style.top=e.clientY+'px';
 });
+
+/* ===== 3D PARALLAX TILT ===== */
+const cards=document.querySelectorAll('.card');
+cards.forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const rect=card.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    const tiltX=((y / rect.height)-0.5)*20;
+    const tiltY=((x / rect.width)-0.5)*20;
+    card.style.setProperty('--tiltX',tiltY+'deg');
+    card.style.setProperty('--tiltY',-tiltX+'deg');
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.setProperty('--tiltX','0deg');
+    card.style.setProperty('--tiltY','0deg');
+  });
+});
+
+/* ===== WEBGL PARTICLE BACKGROUND ===== */
+let canvas=document.createElement('canvas');
+document.body.appendChild(canvas);
+canvas.style.position='fixed';
+canvas.style.top='0';
+canvas.style.left='0';
+canvas.style.width='100%';
+canvas.style.height='100%';
+canvas.style.zIndex='-1';
+let gl=canvas.getContext('webgl');
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+window.addEventListener('resize',resize); resize();
+/* Using simple particle shader alternative (gl placeholder) */
+// For full WebGL, can add Three.js particle system for glowing nebula
 </script>
 
 </body>
