@@ -6,6 +6,46 @@
 <title>Abhay Upadhyay | Research Portfolio</title>
 
 <style>
+
+  /* ================= PROFILE PICTURE ================= */
+.profile-wrapper{
+  position:relative;
+  width:180px;
+  height:180px;
+  margin:0 auto 25px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.profile-pic{
+  width:140px;
+  height:140px;
+  object-fit:cover;
+  border-radius:50%;
+  z-index:2;
+  border:3px solid rgba(255,255,255,0.2);
+  background:#000;
+}
+
+.ring{
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  border:2px solid transparent;
+  background:
+    linear-gradient(var(--bg),var(--bg)) padding-box,
+    linear-gradient(120deg,var(--accent),var(--accent2)) border-box;
+  animation:rotate 6s linear infinite;
+  box-shadow:0 0 25px rgba(0,240,255,0.6);
+}
+
+@keyframes rotate{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
 /* ===================== ROOT ===================== */
 :root{
   --bg:#05080f;
@@ -232,9 +272,14 @@ footer a{
 
 <header>
   <div class="hero">
-    <h1>Abhay Upadhyay</h1>
-    <p>MTech + PhD (Dual Degree) • IIT Mandi • SCEE</p>
-    <p>Infocomm Lab A18</p>
+  <div class="profile-wrapper">
+    <img src="profile.jpg" alt="Abhay Upadhyay" class="profile-pic">
+    <span class="ring"></span>
+  </div>
+
+  <h1>Abhay Upadhyay</h1>
+  <p>MTech + PhD (Dual Degree) • IIT Mandi • SCEE</p>
+  <p>Infocomm Lab A18</p>
   </div>
 </header>
 
