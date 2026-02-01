@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abhay Upadhyay | IIT Mandi</title>
 
-<!-- ICONS -->
+<!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- Three.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
 
 <style>
 :root{
@@ -17,21 +20,19 @@
   --text:#e5e7eb;
   --muted:#94a3b8;
 }
-
-/* ===== RESET ===== */
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Segoe UI,sans-serif;scroll-behavior:smooth;}
 body{background:#05070f;color:var(--text);overflow-x:hidden;}
 
-/* ===== CURSOR GLOW ===== */
+/* Cursor Glow */
 .cursor{position:fixed;width:18px;height:18px;border-radius:50%;background:var(--accent);pointer-events:none;mix-blend-mode:screen;filter:blur(8px);z-index:9999;}
 
-/* ===== NAV ===== */
+/* NAV */
 nav{position:fixed;top:0;width:100%;backdrop-filter:blur(16px);background:rgba(5,7,15,0.7);display:flex;justify-content:center;gap:26px;padding:16px;z-index:1000;}
 nav a{color:var(--muted);text-decoration:none;font-weight:600;position:relative;}
 nav a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.3s;}
 nav a:hover{color:white;} nav a:hover::after{width:100%;}
 
-/* ===== HERO ===== */
+/* Hero */
 header{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:140px 20px;position:relative;}
 header h1{font-size:3.6rem;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 40px rgba(0,240,255,.4);}
 header p{margin-top:14px;color:var(--muted);font-size:1.05rem;}
@@ -41,7 +42,7 @@ header p{margin-top:14px;color:var(--muted);font-size:1.05rem;}
 .btn.secondary{border:2px solid var(--accent);color:var(--accent);background:transparent;}
 .btn:hover{transform:translateY(-4px);box-shadow:0 0 30px rgba(0,240,255,.6);}
 
-/* ===== BEST SCHOLAR ANIMATION ===== */
+/* Best Scholar Banner */
 #scholar-banner{
   position:absolute;
   top:30px;
@@ -57,28 +58,29 @@ header p{margin-top:14px;color:var(--muted);font-size:1.05rem;}
 }
 @keyframes bannerGlow{0%{text-shadow:0 0 20px rgba(0,240,255,0.5);}50%{text-shadow:0 0 40px rgba(0,240,255,0.7);}100%{text-shadow:0 0 20px rgba(139,92,246,0.5);}}
 
-/* ===== SECTIONS ===== */
+/* Sections */
 section{padding:100px 12%;}
 .title{font-size:2.2rem;margin-bottom:50px;position:relative;}
 .title::after{content:"";position:absolute;bottom:-12px;left:0;width:90px;height:3px;background:linear-gradient(90deg,var(--accent),transparent);}
 
-/* ===== CARDS 3D TILT ===== */
+/* Cards 3D Tilt */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;}
-.card{background:var(--glass);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:30px;backdrop-filter:blur(20px);transition:.4s;position:relative;overflow:hidden;transform-style:preserve-3d; perspective:1000px;}
+.card{background:var(--glass);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:30px;backdrop-filter:blur(20px);transition:.4s;position:relative;overflow:hidden;transform-style:preserve-3d;perspective:1000px;}
 .card:hover{transform:rotateY(var(--tiltX,0deg)) rotateX(var(--tiltY,0deg)) translateY(-10px) scale(1.03);box-shadow:0 30px 80px rgba(0,240,255,.25);}
 .card i{font-size:2.2rem;color:var(--accent);margin-bottom:18px;}
 .card h3{margin-bottom:10px;}
 
-/* ===== GALLERY ===== */
+/* Gallery */
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:30px;}
 .gallery img{width:100%;height:220px;object-fit:cover;border-radius:20px;transition:.6s;filter:saturate(1.3);}
 .gallery img:hover{transform:scale(1.08);box-shadow:0 30px 70px rgba(139,92,246,.5);}
 
-/* ===== FOOTER ===== */
+/* Footer */
 footer{text-align:center;padding:40px;color:var(--muted);}
 
-/* ===== RESPONSIVE ===== */
+/* Responsive */
 @media(max-width:700px){header h1{font-size:2.6rem} section{padding:80px 8%}}
+canvas{position:fixed;top:0;left:0;z-index:-2;}
 </style>
 </head>
 
@@ -158,46 +160,71 @@ footer{text-align:center;padding:40px;color:var(--muted);}
 <footer>© 2026 Abhay Upadhyay • IIT Mandi</footer>
 
 <script>
-/* ===== CURSOR GLOW ===== */
+/* Cursor Glow */
 const cursor=document.querySelector('.cursor');
-window.addEventListener('mousemove',e=>{
-  cursor.style.left=e.clientX+'px';
-  cursor.style.top=e.clientY+'px';
-});
+window.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
 
-/* ===== 3D PARALLAX TILT ===== */
-const cards=document.querySelectorAll('.card');
-cards.forEach(card=>{
+/* 3D Tilt Cards */
+document.querySelectorAll('.card').forEach(card=>{
   card.addEventListener('mousemove',e=>{
     const rect=card.getBoundingClientRect();
-    const x=e.clientX-rect.left;
-    const y=e.clientY-rect.top;
-    const tiltX=((y / rect.height)-0.5)*20;
-    const tiltY=((x / rect.width)-0.5)*20;
-    card.style.setProperty('--tiltX',tiltY+'deg');
-    card.style.setProperty('--tiltY',-tiltX+'deg');
+    const x=(e.clientX-rect.left)/rect.width-0.5;
+    const y=(e.clientY-rect.top)/rect.height-0.5;
+    card.style.setProperty('--tiltX',x*20+'deg');
+    card.style.setProperty('--tiltY',-y*20+'deg');
   });
-  card.addEventListener('mouseleave',()=>{
-    card.style.setProperty('--tiltX','0deg');
-    card.style.setProperty('--tiltY','0deg');
-  });
+  card.addEventListener('mouseleave',()=>{card.style.setProperty('--tiltX','0deg');card.style.setProperty('--tiltY','0deg');});
 });
 
-/* ===== WEBGL PARTICLE BACKGROUND ===== */
-let canvas=document.createElement('canvas');
-document.body.appendChild(canvas);
-canvas.style.position='fixed';
-canvas.style.top='0';
-canvas.style.left='0';
-canvas.style.width='100%';
-canvas.style.height='100%';
-canvas.style.zIndex='-1';
-let gl=canvas.getContext('webgl');
-function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-window.addEventListener('resize',resize); resize();
-/* Using simple particle shader alternative (gl placeholder) */
-// For full WebGL, can add Three.js particle system for glowing nebula
+/* ===== THREE.JS PARTICLE 6G BACKGROUND ===== */
+let scene=new THREE.Scene();
+let camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,2000);
+camera.position.z=600;
+
+let renderer=new THREE.WebGLRenderer({alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.domElement.style.position='fixed';
+renderer.domElement.style.top='0';
+renderer.domElement.style.left='0';
+renderer.domElement.style.zIndex='-2';
+document.body.appendChild(renderer.domElement);
+
+window.addEventListener('resize',()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
+
+let particlesCount=800;
+let particlesGeometry=new THREE.BufferGeometry();
+let positions=new Float32Array(particlesCount*3);
+let colors=new Float32Array(particlesCount*3);
+
+for(let i=0;i<particlesCount;i++){
+  positions[i*3]=(Math.random()-0.5)*2000;
+  positions[i*3+1]=(Math.random()-0.5)*2000;
+  positions[i*3+2]=(Math.random()-0.5)*2000;
+  colors[i*3]=Math.random();
+  colors[i*3+1]=Math.random();
+  colors[i*3+2]=Math.random();
+}
+particlesGeometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
+particlesGeometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
+
+let particlesMaterial=new THREE.PointsMaterial({size:3,vertexColors:true,blending:THREE.AdditiveBlending,transparent:true});
+let particleSystem=new THREE.Points(particlesGeometry,particlesMaterial);
+scene.add(particleSystem);
+
+let mouseX=0,mouseY=0;
+document.addEventListener('mousemove',e=>{mouseX=e.clientX-window.innerWidth/2; mouseY=e.clientY-window.innerHeight/2;});
+
+function animate(){
+  requestAnimationFrame(animate);
+  particleSystem.rotation.y+=0.002;
+  particleSystem.rotation.x+=0.001;
+  particleSystem.position.x += (mouseX*0.01 - particleSystem.position.x)*0.05;
+  particleSystem.position.y += (-mouseY*0.01 - particleSystem.position.y)*0.05;
+  renderer.render(scene,camera);
+}
+animate();
 </script>
 
 </body>
-</html>
+                                                                                                              </html>
